@@ -10,7 +10,7 @@ const UpdateAboutUsForm = () => {
     // Fetch existing About Us information
     const fetchAboutUs = async () => {
       try {
-        const response = await fetch('http://localhost:4000/about-us');
+        const response = await fetch('https://frontbis.onrender.com/about-us');
         const result = await response.json();
         if (response.ok) {
           setTitle(result.title);
@@ -30,7 +30,7 @@ const UpdateAboutUsForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/about-us', {
+      const response = await fetch('https://frontbis.onrender.com/about-us', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -11,7 +11,7 @@ const Header = () => {
     useEffect(() => {
         const fetchLogos = async () => {
             try {
-                const response = await fetch('http://localhost:4000/logos');
+                const response = await fetch('https://frontbis.onrender.com/logos');
                 if (response.ok) {
                     const data = await response.json();
                     setLogos(data);

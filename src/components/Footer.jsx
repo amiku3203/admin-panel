@@ -11,7 +11,7 @@ const MapModal = () => {
 
   const fetchMapEmbed = async () => {
     try {
-      const response = await fetch('http://localhost:4000/map');
+      const response = await fetch('https://frontbis.onrender.com/map');
       const data = await response.json();
       setEmbedCode(data.embedCode || '');
     } catch (error) {
@@ -22,7 +22,7 @@ const MapModal = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/update-map', {
+      const response = await fetch('https://frontbis.onrender.com/update-map', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

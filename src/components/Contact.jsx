@@ -21,7 +21,7 @@ const Contact = () => {
 
   const fetchContacts = async () => {
     try {
-      const response = await fetch('http://localhost:4000/contacts');
+      const response = await fetch('https://frontbis.onrender.com/contacts');
       const data = await response.json();
       setContacts(data);
     } catch (error) {
@@ -46,7 +46,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://localhost:4000/updatecontact/${currentContactId}`;
+      const url = `https://frontbis.onrender.com/updatecontact/${currentContactId}`;
       const method = 'PUT';
 
       const response = await fetch(url, {
