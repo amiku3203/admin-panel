@@ -46,7 +46,7 @@ const Header = () => {
         formData.append('altText', altText);
 
         try {
-            const response = await fetch(`http://localhost:4000/update-logo/${logoId}`, {
+            const response = await fetch(`https://frontbis.onrender.com/update-logo/${logoId}`, {
                 method: 'PUT',
                 body: formData,
             });
