@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
 const Header = () => {
     const [file, setFile] = useState(null);
     const [altText, setAltText] = useState('');
+    const [logoId, setLogoId] = useState('');
+    const [logos, setLogos] = useState([]);
+
+    useEffect(() => {
+        const fetchLogos = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/logos');
+                if (response.ok) {
+                    const data = await response.json();
+                    setLogos(data);
+                } else {
+                    const errorData = await response.json();
+                    toast.error(errorData.message);
+                }
+            } catch (error) {
+                toast.error(error.message);
+            }
+        };
+
+        fetchLogos();
+    }, []);
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -14,6 +35,10 @@ const Header = () => {
         setAltText(e.target.value);
     };
 
+    const handleLogoIdChange = (e) => {
+        setLogoId(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -21,14 +46,16 @@ const Header = () => {
         formData.append('altText', altText);
 
         try {
-            const response = await fetch('http://localhost:4000/upload-logo', {
-                method: 'POST',
-                body: JSON.stringify(formData),
+            const response = await fetch(`http://localhost:4000/update-logo/${logoId}`, {
+                method: 'PUT',
+                body: formData,
             });
-             console.log("logo", response)
             if (response.ok) {
                 const data = await response.json();
                 toast.success(data.message);
+                // Refetch logos after updating
+                const updatedLogos = await fetch('http://localhost:4000/logos').then(res => res.json());
+                setLogos(updatedLogos);
             } else {
                 const errorData = await response.json();
                 toast.error(errorData.message);
@@ -42,6 +69,24 @@ const Header = () => {
         <div className="container mx-auto p-4">
             <ToastContainer />
             <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="logoId">
+                        Select Logo to Update
+                    </label>
+                    <select
+                        id="logoId"
+                        value={logoId}
+                        onChange={handleLogoIdChange}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    >
+                        <option value="">Select a logo</option>
+                        {logos.map(logo => (
+                            <option key={logo._id} value={logo._id}>
+                                {logo.altText}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="logo">
                         Logo
@@ -70,7 +115,7 @@ const Header = () => {
                         type="submit"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     >
-                        Upload Logo
+                        Update Logo
                     </button>
                 </div>
             </form>

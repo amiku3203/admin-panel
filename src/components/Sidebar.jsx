@@ -5,9 +5,19 @@ import { RiGalleryFill } from "react-icons/ri";
 import { FaHeading } from "react-icons/fa";
 import { GiWingfoot } from "react-icons/gi";
 import { LuContact2 } from "react-icons/lu";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ sidebarToggle }) => {
+const Sidebar = ({ sidebarToggle, setIsLoggedIn }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear authentication state
+    setIsLoggedIn(false);
+
+    // Redirect to login page
+    navigate('/');
+  };
+
   return (
     <div className={`${sidebarToggle ? "hidden" : "block"} w-64 bg-gray-200 text-black fixed h-full px-4 py-2 font-sans shadow-lg`}>
       <div className="my-2 mb-4 bg-gray-300 rounded-lg font-sans p-4 shadow-md">
@@ -18,7 +28,7 @@ const Sidebar = ({ sidebarToggle }) => {
         <li className="mb-2 rounded hover:shadow-md hover:bg-blue-500 hover:text-white transition duration-300 py-8">
           <Link to="/" className="px-3 flex items-center">
             <FaHome className="w-6 h-6 mr-2" />
-            Home
+            About Us
           </Link>
         </li>
         <li className="mb-2 rounded-sm hover:shadow-md hover:bg-blue-500 hover:text-white transition duration-300 py-8">
@@ -52,10 +62,10 @@ const Sidebar = ({ sidebarToggle }) => {
           </Link>
         </li>
         <li className="mb-2 rounded hover:shadow-md hover:bg-red-500 hover:text-white transition duration-300 py-8">
-          <Link to="/logout" className="px-3 flex items-center">
+          <button onClick={handleLogout} className="px-3 flex items-center w-full">
             <MdLogout className="w-6 h-6 mr-2" />
             Logout
-          </Link>
+          </button>
         </li>
       </ul>
     </div>
