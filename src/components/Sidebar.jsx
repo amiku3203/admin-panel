@@ -61,7 +61,7 @@ const Sidebar = ({ sidebarToggle, setIsLoggedIn }) => {
             Footer
           </Link>
         </li>
-        <li className="mb-2 rounded hover:shadow-md hover:bg-red-500 hover:text-white transition duration-300 py-8">
+        <li className="mb-2 rounded hover:shadow-md hover:bg-red-500 hover:text-white transition duration-300 py-2">
           <button onClick={handleLogout} className="px-3 flex items-center w-full">
             <MdLogout className="w-6 h-6 mr-2" />
             Logout
