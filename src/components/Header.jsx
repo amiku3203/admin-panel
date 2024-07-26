@@ -54,7 +54,7 @@ const Header = () => {
                 const data = await response.json();
                 toast.success(data.message);
                 // Refetch logos after updating
-                const updatedLogos = await fetch('http://localhost:4000/logos').then(res => res.json());
+                const updatedLogos = await fetch('https://frontbis.onrender.com/logos').then(res => res.json());
                 setLogos(updatedLogos);
             } else {
                 const errorData = await response.json();
